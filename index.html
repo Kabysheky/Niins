@@ -232,7 +232,7 @@
     </div>
 
     <div class="vip-card" id="vipEmerald" onclick="selectVIP(this)">
-        <div class="lock-overlay">UNLOCK: 2 ITEMS FROM EVERY SECTION</div>
+        <div class="lock-overlay">UNLOCK: PICK THE TOP 2 ITEMS IN EVERY SECTION</div>
         <div class="vip-card-inner">
             <h3 style="font-family:'Playfair Display'; text-align:center; color:var(--emerald-bright); margin:0;">👑 VIP EMERALD STATUS</h3>
             <span style="display:block; text-align:center; font-size:10px; margin-bottom:15px; color: var(--gold-light);">Requirement: (1) Big Bite of your food monthly</span>
@@ -355,9 +355,17 @@
     function updateUI() {
         const sections = document.querySelectorAll('.section');
         let eligible = true;
+
         sections.forEach(s => {
-            if (s.querySelectorAll('.item.selected').length < 2) eligible = false;
+            const items = Array.from(s.querySelectorAll('.item'));
+            // Check if Item 0 AND Item 1 in this specific section are BOTH selected
+            const firstTwoSelected = items[0].classList.contains('selected') && items[1].classList.contains('selected');
+            
+            if (!firstTwoSelected) {
+                eligible = false;
+            }
         });
+
         const v = document.getElementById('vipEmerald');
         if (eligible) {
             if (!v.classList.contains('unlocked')) {
@@ -368,6 +376,7 @@
             v.classList.remove('unlocked', 'selected');
             vipActive = false;
         }
+
         const count = selectedItems.length + (vipActive ? 1 : 0);
         document.getElementById('itemCount').innerText = count;
         document.getElementById('cartBar').classList.toggle('active', count > 0);
@@ -392,13 +401,17 @@
         if(note.trim()) {
             document.getElementById('v-note-section').style.display = 'block';
             document.getElementById('v-note-text').innerText = `"${note}"`;
+        } else {
+            document.getElementById('v-note-section').style.display = 'none';
         }
 
         document.getElementById('v-vip').innerText = vipActive ? "👑 VIP EMERALD STATUS ACTIVATED" : "";
         document.getElementById('v-sig').innerText = sig;
 
+        // Position template for capture
         vTemplate.style.left = "0";
         vTemplate.style.top = "0";
+        vTemplate.style.zIndex = "-1";
 
         html2canvas(vTemplate, { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
             const link = document.createElement('a');
