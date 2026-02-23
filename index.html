@@ -2,261 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Morning Muse - Statement</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700;1,900&family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-            --gold-solid: #d4af37;
-            --dark: #050505;
+            --gold: #d4af37;
+            --emerald: #064e3b;
+            --emerald-bright: #10b981;
+            --dark: #0a0a0a;
             --neon-pink: #ff007f;
             --cream: #fffdfa;
             --accent: #e63946;
-            --glass: rgba(255, 253, 250, 0.95);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: var(--dark);
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(255, 0, 127, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 40%),
-                url('https://www.transparenttextures.com/patterns/dark-matter.png');
+            background-image: radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.1) 0%, transparent 40%), linear-gradient(180deg, #121212 0%, #000 100%);
             margin: 0;
-            padding: 40px 15px;
+            padding: 20px 15px 80px;
             font-family: 'Montserrat', sans-serif;
             display: flex;
             justify-content: center;
-            color: #333;
         }
 
-        /* --- THE CARD --- */
         .menu-card {
-            background: var(--glass);
+            background-color: var(--cream);
             width: 100%;
-            max-width: 550px;
+            max-width: 500px;
             border-radius: 40px;
-            padding: 60px 35px;
+            padding: 60px 25px;
             position: relative;
-            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
-            border: 1px solid rgba(255,255,255,0.2);
-            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            animation: iosReveal 0.8s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(60px) scale(0.95); } 
-            to { opacity: 1; transform: translateY(0) scale(1); } 
-        }
+        @keyframes iosReveal { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- THE STAMP --- */
         .stamp {
             position: absolute;
-            top: 50px;
-            right: -35px;
+            top: 40px;
+            right: -10px;
             background: var(--accent);
             color: white;
-            padding: 12px 60px;
+            padding: 10px 35px;
             font-weight: 900;
-            transform: rotate(25deg);
-            font-size: 14px;
-            letter-spacing: 4px;
+            transform: rotate(15deg);
+            font-size: 13px;
+            letter-spacing: 2px;
             z-index: 10;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
-            mix-blend-mode: multiply; /* Makes it look more like ink on paper */
-            opacity: 0.9;
+            border-radius: 4px;
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.3);
         }
 
-        header { text-align: center; margin-bottom: 50px; position: relative; }
-        
-        header h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: clamp(32px, 8vw, 44px); 
-            margin: 0; 
-            color: var(--dark); 
-            font-style: italic;
-            font-weight: 900;
-        }
-
-        .ledger { 
-            font-size: 11px; 
-            font-weight: 800; 
-            color: var(--gold-solid); 
-            letter-spacing: 4px; 
-            margin-top: 12px;
-            text-transform: uppercase;
-        }
+        header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #f0f0f0; padding-bottom: 30px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 36px; margin: 0; color: var(--dark); }
+        .ledger { font-size: 10px; font-weight: 800; color: var(--gold); letter-spacing: 3px; margin-top: 10px; text-transform: uppercase; }
 
         h2 { 
             font-family: 'Playfair Display', serif;
             font-size: 22px; 
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-            margin: 50px 0 25px 0;
+            border-bottom: 1.5px solid var(--gold);
+            padding-bottom: 5px;
+            margin-top: 45px;
             color: var(--dark);
-            display: flex;
-            align-items: center;
-        }
-        
-        h2::after {
-            content: '';
-            flex-grow: 1;
-            height: 1px;
-            background: linear-gradient(to right, #eee, transparent);
-            margin-left: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
-        /* --- ITEM STYLING --- */
-        .item { 
-            margin: 25px 0; 
-            transition: all 0.3s ease;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 12px;
-        }
-        
-        .item:hover {
-            background: rgba(0,0,0,0.02);
-            transform: translateX(5px);
-        }
+        .item { margin: 25px 0; padding-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .item-head { display: flex; justify-content: space-between; font-weight: 900; font-size: 16px; color: #111; gap: 10px; }
+        .price { color: var(--accent); font-size: 10px; font-weight: 800; text-transform: uppercase; background: rgba(230, 57, 70, 0.05); padding: 2px 8px; border-radius: 5px; white-space: nowrap; height: fit-content; }
+        .desc { font-size: 14px; color: #333; margin-top: 8px; line-height: 1.5; font-style: italic; }
 
-        .item-head { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: baseline;
-            font-weight: 800; 
-            font-size: 16px; 
-            color: #1a1a1a; 
-            gap: 15px;
-        }
+        /* AFTER DARK */
+        .after-dark-box { background: #000; border-radius: 35px; padding: 35px 20px; margin-top: 40px; border: 1.5px solid var(--neon-pink); box-shadow: 0 20px 50px rgba(255, 0, 127, 0.2); }
+        .after-dark-box h2 { color: var(--neon-pink); border-bottom-color: #333; }
+        .after-dark-box .item-head { color: var(--neon-pink); }
+        .after-dark-box .desc { color: #aaa; }
+        .after-dark-box .price { color: #fff; border: 1px solid var(--neon-pink); background: none; }
 
-        .price { 
-            color: var(--accent); 
-            font-size: 10px; 
-            font-weight: 900; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            white-space: nowrap;
-            background: rgba(230, 57, 70, 0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-
-        .desc { 
-            font-size: 13px; 
-            color: #777; 
-            margin-top: 8px; 
-            line-height: 1.6; 
-            font-weight: 400;
-        }
-
-        /* --- AFTER DARK SECTION --- */
-        .after-dark-box { 
-            background: #000; 
-            border-radius: 35px; 
-            padding: 40px 25px; 
-            margin-top: 50px; 
-            border: 1px solid var(--neon-pink);
-            box-shadow: 0 0 30px rgba(255, 0, 127, 0.15);
-            position: relative;
-        }
-
-        .after-dark-box::before {
-            content: 'LIMITED ACCESS';
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 9px;
-            color: var(--neon-pink);
-            letter-spacing: 5px;
-            animation: flicker 2s infinite;
-        }
-
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-            20%, 22%, 24%, 55% { opacity: 0.2; }
-        }
-
-        .after-dark-box h2 { 
-            color: #fff; 
-            border-bottom-color: #222; 
-            text-shadow: 0 0 10px var(--neon-pink);
-        }
-        .after-dark-box .item-head { color: #eee; }
-        .after-dark-box .desc { color: #bbb; font-style: italic; }
-        .after-dark-box .price { 
-            color: var(--neon-pink); 
-            border: 1px solid var(--neon-pink); 
-            background: transparent;
-            box-shadow: 0 0 5px var(--neon-pink);
-        }
-
-        /* --- VIP SECTION --- */
-        .vip-tier {
-            background: #fff;
-            background-image: var(--gold);
-            padding: 2px; /* For the border effect */
+        /* EMERALD STATUS */
+        .vip-card {
+            background: linear-gradient(135deg, #064e3b 0%, #10b981 50%, #064e3b 100%);
+            padding: 3px;
             border-radius: 25px;
-            margin-top: 50px;
+            margin-top: 40px;
+            box-shadow: 0 15px 35px rgba(6, 78, 59, 0.4);
         }
+        .vip-card-inner { background: var(--dark); border-radius: 22px; padding: 30px 20px; text-align: center; }
+        .vip-card-inner h3 { color: var(--emerald-bright); font-family: 'Playfair Display', serif; margin: 0; letter-spacing: 3px; font-size: 20px; }
+        .vip-price { font-size: 11px; color: #fff; margin: 15px 0; display: block; opacity: 0.8; line-height: 1.4; }
+        .vip-perks { font-size: 13px; color: #ccc; line-height: 1.8; border-top: 1px solid #222; padding-top: 15px; text-align: left; }
 
-        .vip-inner {
-            background: var(--cream);
-            padding: 30px 20px;
-            border-radius: 23px;
-            text-align: center;
-        }
-
-        .vip-title {
-            font-weight: 900;
-            letter-spacing: 5px;
-            color: var(--dark);
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        /* --- BUTTON --- */
         .btn {
             display: block;
             background: var(--dark);
-            color: #fff;
+            color: var(--gold);
             text-align: center;
-            padding: 25px;
-            margin-top: 50px;
+            padding: 22px;
+            margin-top: 40px;
             text-decoration: none;
             font-weight: 900;
-            letter-spacing: 3px;
             border-radius: 20px;
-            transition: 0.4s;
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
+            font-size: 17px;
+            border: 1px solid var(--gold);
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 0%; height: 100%;
-            background: var(--gold-solid);
-            transition: 0.4s;
-            z-index: -1;
-        }
-
-        .btn:hover::before { width: 100%; }
-        .btn:hover { color: var(--dark); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-
-        footer { 
-            text-align: center; 
-            font-size: 10px; 
-            margin-top: 40px; 
-            color: #999; 
-            letter-spacing: 1px; 
-            line-height: 2;
-            font-weight: 600;
-        }
+        footer { text-align: center; font-size: 11px; margin-top: 40px; color: #888; letter-spacing: 1px; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -266,73 +121,113 @@
     
     <header>
         <h1>The Morning Muse</h1>
-        <div class="ledger">STATEMENT #882-LOVE • STATUS: SUSPENDED</div>
+        <div class="ledger">SUBSCRIPTION SUSPENDED</div>
     </header>
 
     <h2>Morning Appetizers</h2>
     <div class="item">
-        <div class="item-head"><span>The Lite Breakfast</span><span class="price">10 Miss U Texts</span></div>
-        <div class="desc">A medium text + 2 hearts + a bespoke compliment about your eyes.</div>
+        <div class="item-head"><span>The Lite Breakfast</span><span class="price">10 Miss U Texts Daily</span></div>
+        <div class="desc">A medium text + 2 hearts + a compliment about your eyes.</div>
     </div>
     <div class="item">
-        <div class="item-head"><span>Voice Note Upgrade</span><span class="price">10 Audio Logs</span></div>
-        <div class="desc">Trade the text for my "just woke up" morning rasp voice. Heavy on the sleepy vibes.</div>
+        <div class="item-head"><span>Voice Note Upgrade</span><span class="price">10 Record Audio</span></div>
+        <div class="desc">Trade the text for my "just woke up" morning rasp voice.</div>
+    </div>
+    <div class="item">
+        <div class="item-head"><span>The Pinky Swear</span><span class="price">5 Snack Promises</span></div>
+        <div class="desc">3 traits of yours that make me want to put a ring on it.</div>
     </div>
 
     <h2>Main Entrées</h2>
     <div class="item">
         <div class="item-head"><span>The Full Brunch (LAGMM)</span><span class="price">10m Tight Hug</span></div>
-        <div class="desc">The Long-Ass Good Morning Message. Detailed reasons why you're a goddess.</div>
+        <div class="desc">The legendary Long-Ass Message. Detailed reasons why you're a goddess.</div>
     </div>
     <div class="item">
         <div class="item-head"><span>The Bottomless Mimosa</span><span class="price">10 Candid Selfies</span></div>
-        <div class="desc">Full-day hype man energy. Compliments every hour + 100% chat priority.</div>
+        <div class="desc">Full-day hype man energy. Compliments every hour + 100% priority.</div>
+    </div>
+    <div class="item">
+        <div class="item-head"><span>The Chef’s Kiss</span><span class="price">Date Choice (1 mo)</span></div>
+        <div class="desc">A poem every hour for 24hrs straight.</div>
     </div>
 
     <h2>The Wine Cellar</h2>
     <div class="item">
-        <div class="item-head"><span>The 'Remember When'</span><span class="price">1 Core Memory</span></div>
+        <div class="item-head"><span>The 'Remember When'</span><span class="price">3 Core Memory</span></div>
         <div class="desc">A deep-dive text about the exact second I knew you were the one.</div>
     </div>
     <div class="item">
         <div class="item-head"><span>The Future Forecast</span><span class="price">3 Unknown Facts</span></div>
-        <div class="desc">A paragraph about what our life looks like 5 years from today. Spoiler: You're happy.</div>
+        <div class="desc">A paragraph about what our life looks like 5 years from today.</div>
+    </div>
+    <div class="item">
+        <div class="item-head"><span>The Dream Analysis</span><span class="price">3 Dream Details</span></div>
+        <div class="desc">Scientific proof (from me) that your weird dream means you love me.</div>
+    </div>
+
+    <h2>Lifestyle & Hype</h2>
+    <div class="item">
+        <div class="item-head"><span>The Hype Girl Special</span><span class="price">10 Outfit Pics</span></div>
+        <div class="desc">A 3-paragraph breakdown of why you're better than everyone on Earth.</div>
+    </div>
+    <div class="item">
+        <div class="item-head"><span>The Camera Roll Tax</span><span class="price">Fav Photo of Us/You</span></div>
+        <div class="desc">I review the photos like fine art. One becomes my wallpaper.</div>
+    </div>
+    <div class="item">
+        <div class="item-head"><span>The 'No-Phone' Noir</span><span class="price">10m Eye Contact</span></div>
+        <div class="desc">1 week of guaranteed "Good Morning Beautiful" texts.</div>
     </div>
 
     <div class="after-dark-box">
         <h2>After Dark (Spicy Suite)</h2>
         <div class="item">
             <div class="item-head"><span>The Midnight Snack</span><span class="price">10 Spicy Photos</span></div>
-            <div class="desc">A detailed layout of our future home—from the door color to the spot where we’ll drink coffee.</div>
+            <div class="desc">I write a detailed breakdown of our "Future Home" from the color of the front door to the exact spot where we’ll drink our coffee.</div>
+        </div>
+        <div class="item">
+            <div class="item-head"><span>The Datescaping Package</span><span class="price">1 No Landscaping</span></div>
+            <div class="desc">I take care of all the date plannings for life.</div>
         </div>
         <div class="item">
             <div class="item-head"><span>Room Service Special</span><span class="price">Head Massages</span></div>
-            <div class="desc">A written recap of exactly how your body drives me insane. No details spared.</div>
+            <div class="desc">I write a recap of how your body drives me insane.</div>
         </div>
         <div class="item">
             <div class="item-head"><span>The Late Checkout</span><span class="price">10 Sleepy Mumbles</span></div>
             <div class="desc">Unlocks my unfiltered, half-asleep thoughts sent to you in the dead of night.</div>
         </div>
-    </div>
-
-    <div class="vip-tier">
-        <div class="vip-inner">
-            <span class="vip-title">👑 VIP GOLD TIER</span>
-            <p style="font-size: 12px; margin: 10px 0; font-weight: 700;">PRICE: A BIG BITE OF YOUR FAVORITE FOOD</p>
-            <div class="desc">Priority response, unprompted kisses, and one "Kash Makeover" pass per month (Use wisely).</div>
+        <div class="item">
+            <div class="item-head"><span>The Blindfold Tasting</span><span class="price">Admit Obsession</span></div>
+            <div class="desc">I keep a running list of every tiny thing you do that made me fall for you a little more.</div>
         </div>
     </div>
 
-    <div class="item" style="border: 1px dashed var(--gold-solid); margin-top: 30px;">
-        <div class="item-head"><span>The Lifetime Bundle</span><span class="price">Admit I'm Cuter</span></div>
-        <div class="desc">Daily morning paragraphs for life. Non-refundable. Paid in total obsession.</div>
+    <div class="membership-container">
+        <div class="vip-card">
+            <div class="vip-card-inner">
+                <h3>👑 VIP EMERALD STATUS</h3>
+                <span class="vip-price">Fee: One (1) Big Bite of your favorite food every month</span>
+                <div class="vip-perks">
+                    • Priority response time (instant)<br>
+                    • Unlimited unprompted kisses<br>
+                    • One (1) "Kash Makeover" pass (choose wisely)
+                </div>
+            </div>
+        </div>
+
+        <div class="item" style="border: 2px dashed var(--gold); background: rgba(212, 175, 55, 0.05); padding: 20px; border-radius: 20px; margin-top: 20px;">
+            <div class="item-head"><span>THE FOREVER CONTRACT</span><span class="price">Admit I'm Cuter</span></div>
+            <div class="desc">Access to the "Morning Paragraph" archive for life. Paid in pure obsession.</div>
+        </div>
     </div>
 
-    <a href="#" class="btn" onclick="alert('CRITICAL ERROR: Account Frozen. \n\nPlease remit 1 Selfie (Current/Cute) to verify identity and unlock services.')">SETTLE THE BILL</a>
+    <a href="#" class="btn" onclick="alert('ERROR 402: PAYMENT REQUIRED\n\nPlease remit 1 (one) high-quality selfie to unlock these features.')">SETTLE THE BILL</a>
 
     <footer>
         * NO REFUNDS. TAXES PAID IN KISSES. <br>
-        * MANAGEMENT IS CURRENTLY HEAD OVER HEELS FOR THE CUSTOMER.
+        * MANAGEMENT IS CURRENTLY OBSESSED WITH THE CUSTOMER.
     </footer>
 </div>
 
