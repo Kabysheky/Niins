@@ -27,6 +27,7 @@
             justify-content: center;
         }
 
+        /* Entrance Animation for the whole card */
         .menu-card {
             background-color: var(--cream);
             width: 100%;
@@ -36,11 +37,15 @@
             position: relative;
             box-shadow: 0 40px 100px rgba(0,0,0,0.8);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            animation: iosReveal 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            animation: iosReveal 1s cubic-bezier(0.2, 1, 0.3, 1) forwards;
         }
 
-        @keyframes iosReveal { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes iosReveal { 
+            from { opacity: 0; transform: scale(0.9) translateY(60px); } 
+            to { opacity: 1; transform: scale(1) translateY(0); } 
+        }
 
+        /* The "PAST DUE" Stamp wiggles to grab attention */
         .stamp {
             position: absolute;
             top: 40px;
@@ -55,7 +60,11 @@
             z-index: 10;
             border-radius: 4px;
             box-shadow: 4px 4px 15px rgba(0,0,0,0.3);
+            animation: stampPop 0.6s 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both, stampWiggle 3s 1.4s infinite;
         }
+
+        @keyframes stampPop { from { opacity: 0; transform: rotate(0deg) scale(2); } to { opacity: 1; transform: rotate(15deg) scale(1); } }
+        @keyframes stampWiggle { 0%, 100% { transform: rotate(15deg); } 50% { transform: rotate(18deg); } }
 
         header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #f0f0f0; padding-bottom: 30px; }
         header h1 { font-family: 'Playfair Display', serif; font-size: 36px; margin: 0; color: var(--dark); }
@@ -72,26 +81,51 @@
             letter-spacing: 1.5px;
         }
 
-        .item { margin: 25px 0; padding-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        /* Individual Items stagger in */
+        .item { 
+            margin: 25px 0; 
+            padding-bottom: 15px; 
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        .item.visible {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
         .item-head { display: flex; justify-content: space-between; font-weight: 900; font-size: 16px; color: #111; gap: 10px; }
         .price { color: var(--accent); font-size: 10px; font-weight: 800; text-transform: uppercase; background: rgba(230, 57, 70, 0.05); padding: 2px 8px; border-radius: 5px; white-space: nowrap; height: fit-content; }
         .desc { font-size: 14px; color: #333; margin-top: 8px; line-height: 1.5; font-style: italic; }
 
         /* AFTER DARK */
-        .after-dark-box { background: #000; border-radius: 35px; padding: 35px 20px; margin-top: 40px; border: 1.5px solid var(--neon-pink); box-shadow: 0 20px 50px rgba(255, 0, 127, 0.2); }
+        .after-dark-box { 
+            background: #000; 
+            border-radius: 35px; 
+            padding: 35px 20px; 
+            margin-top: 40px; 
+            border: 1.5px solid var(--neon-pink); 
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.1); 
+        }
         .after-dark-box h2 { color: var(--neon-pink); border-bottom-color: #333; }
         .after-dark-box .item-head { color: var(--neon-pink); }
         .after-dark-box .desc { color: #aaa; }
         .after-dark-box .price { color: #fff; border: 1px solid var(--neon-pink); background: none; }
 
-        /* EMERALD STATUS */
+        /* VIP CARD GLOW */
         .vip-card {
-            background: linear-gradient(135deg, #064e3b 0%, #10b981 50%, #064e3b 100%);
+            background: linear-gradient(135deg, #064e3b, #10b981, #064e3b);
+            background-size: 200% 200%;
             padding: 3px;
             border-radius: 25px;
             margin-top: 40px;
-            box-shadow: 0 15px 35px rgba(6, 78, 59, 0.4);
+            animation: shine 4s linear infinite;
         }
+
+        @keyframes shine { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
         .vip-card-inner { background: var(--dark); border-radius: 22px; padding: 30px 20px; text-align: center; }
         .vip-card-inner h3 { color: var(--emerald-bright); font-family: 'Playfair Display', serif; margin: 0; letter-spacing: 3px; font-size: 20px; }
         .vip-price { font-size: 11px; color: #fff; margin: 15px 0; display: block; opacity: 0.8; line-height: 1.4; }
@@ -109,7 +143,10 @@
             border-radius: 20px;
             font-size: 17px;
             border: 1px solid var(--gold);
+            transition: 0.3s;
         }
+        
+        .btn:active { transform: scale(0.96); background: var(--gold); color: var(--dark); }
 
         footer { text-align: center; font-size: 11px; margin-top: 40px; color: #888; letter-spacing: 1px; line-height: 1.6; }
     </style>
@@ -144,7 +181,7 @@
         <div class="desc">The legendary Long-Ass Message. Detailed reasons why you're a goddess.</div>
     </div>
     <div class="item">
-        <div class="item-head"><span>The Bottomless Mimosa</span><span class="price">10 Candid Selfies</span></div>
+        <div class="item-head"><span>The Bottomless Mimosa</span><span class="price">10 Unfiltered Candid Selfies</span></div>
         <div class="desc">Full-day hype man energy. Compliments every hour + 100% priority.</div>
     </div>
     <div class="item">
@@ -158,7 +195,7 @@
         <div class="desc">A deep-dive text about the exact second I knew you were the one.</div>
     </div>
     <div class="item">
-        <div class="item-head"><span>The Future Forecast</span><span class="price">3 Unknown Facts</span></div>
+        <div class="item-head"><span>The Future Forecast</span><span class="price">3 Unknown Facts about you</span></div>
         <div class="desc">A paragraph about what our life looks like 5 years from today.</div>
     </div>
     <div class="item">
@@ -217,7 +254,7 @@
             </div>
         </div>
 
-        <div class="item" style="border: 2px dashed var(--gold); background: rgba(212, 175, 55, 0.05); padding: 20px; border-radius: 20px; margin-top: 20px;">
+        <div class="item" style="border: 2px dashed var(--gold); background: rgba(212, 175, 55, 0.05); padding: 20px; border-radius: 20px; margin-top: 20px; opacity: 1; transform: none;">
             <div class="item-head"><span>THE FOREVER CONTRACT</span><span class="price">Admit I'm Cuter</span></div>
             <div class="desc">Access to the "Morning Paragraph" archive for life. Paid in pure obsession.</div>
         </div>
@@ -230,6 +267,22 @@
         * MANAGEMENT IS CURRENTLY OBSESSED WITH THE CUSTOMER.
     </footer>
 </div>
+
+<script>
+    // Reveal items one by one as she scrolls
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Slight delay for each item to create a "wave" effect
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 100); 
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.item').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
