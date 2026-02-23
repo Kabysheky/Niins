@@ -2,710 +2,339 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SYSTEM_OVERRIDE // KANNAMMA</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Sacramento&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Morning Muse - Statement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700;1,900&family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff2d55;
-            --secondary: #ff0033;
-            --success: #00ff41;
-            --error: #ff0000;
-            --terminal-bg: #050505;
-            --glow: 0 0 15px rgba(255, 45, 85, 0.6);
-            --border: rgba(255, 45, 85, 0.4);
+            --gold: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --gold-solid: #d4af37;
+            --dark: #050505;
+            --neon-pink: #ff007f;
+            --cream: #fffdfa;
+            --accent: #e63946;
+            --glass: rgba(255, 253, 250, 0.95);
         }
 
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Courier Prime', monospace; color: var(--success); user-select: none; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--dark);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 127, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 40%),
+                url('https://www.transparenttextures.com/patterns/dark-matter.png');
+            margin: 0;
+            padding: 40px 15px;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            color: #333;
+        }
+
+        /* --- THE CARD --- */
+        .menu-card {
+            background: var(--glass);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 40px;
+            padding: 60px 35px;
+            position: relative;
+            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+            border: 1px solid rgba(255,255,255,0.2);
+            overflow: hidden;
+        }
+
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(60px) scale(0.95); } 
+            to { opacity: 1; transform: translateY(0) scale(1); } 
+        }
+
+        /* --- THE STAMP --- */
+        .stamp {
+            position: absolute;
+            top: 50px;
+            right: -35px;
+            background: var(--accent);
+            color: white;
+            padding: 12px 60px;
+            font-weight: 900;
+            transform: rotate(25deg);
+            font-size: 14px;
+            letter-spacing: 4px;
+            z-index: 10;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            mix-blend-mode: multiply; /* Makes it look more like ink on paper */
+            opacity: 0.9;
+        }
+
+        header { text-align: center; margin-bottom: 50px; position: relative; }
         
-        /* --- CRT EFFECT --- */
-        .screen-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 10000; background-size: 100% 2px, 3px 100%; pointer-events: none;
-            box-shadow: inset 0 0 80px rgba(0,0,0,0.7);
+        header h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: clamp(32px, 8vw, 44px); 
+            margin: 0; 
+            color: var(--dark); 
+            font-style: italic;
+            font-weight: 900;
+        }
+
+        .ledger { 
+            font-size: 11px; 
+            font-weight: 800; 
+            color: var(--gold-solid); 
+            letter-spacing: 4px; 
+            margin-top: 12px;
+            text-transform: uppercase;
+        }
+
+        h2 { 
+            font-family: 'Playfair Display', serif;
+            font-size: 22px; 
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin: 50px 0 25px 0;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
         }
         
-        @keyframes flicker { 0% { opacity: 0.97; } 5% { opacity: 0.95; } 10% { opacity: 0.9; } 15% { opacity: 0.95; } 100% { opacity: 0.97; } }
-        body { animation: flicker 0.15s infinite; }
-
-        .glitch-mode { animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite; }
-        .glitch-mode .screen-overlay { background: rgba(255, 0, 0, 0.2); }
-        @keyframes glitch-skew {
-            0% { transform: translate(0); filter: blur(0); }
-            20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
-            40% { transform: translate(-2px, -2px); filter: inherit; }
-            60% { transform: translate(2px, 2px); filter: hue-rotate(-90deg); }
-            80% { transform: translate(2px, -2px); filter: inherit; }
-            100% { transform: translate(0); filter: blur(0); }
+        h2::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(to right, #eee, transparent);
+            margin-left: 15px;
         }
 
-        #flash {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; z-index: 10001; display: none; pointer-events: none;
-        }
-
-        #work-mode {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--terminal-bg); color: #888; z-index: 9999;
-            padding: 40px; box-sizing: border-box; font-size: 13px;
-        }
-
-        #fake-console { height: 70%; overflow: hidden; color: #33ff33; mask-image: linear-gradient(to bottom, black 80%, transparent 100%); }
-        .cursor { display: inline-block; width: 10px; height: 18px; background: var(--primary); animation: blink 1s infinite; vertical-align: middle; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        #scanner-container {
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            z-index: 10002; text-align: center; width: 300px;
-        }
-
-        #init-trigger {
-            width: 140px; height: 140px; border: 2px solid var(--primary);
-            border-radius: 50%; background: rgba(255, 45, 85, 0.05);
-            position: relative; cursor: pointer; margin: 0 auto 20px;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s; overflow: hidden;
-            box-shadow: 0 0 20px var(--border), inset 0 0 20px var(--border);
+        /* --- ITEM STYLING --- */
+        .item { 
+            margin: 25px 0; 
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 12px;
         }
         
-        #init-trigger:hover { background: rgba(255, 45, 85, 0.15); box-shadow: 0 0 40px var(--primary); }
-        .voice-active { box-shadow: 0 0 50px var(--primary), inset 0 0 30px var(--primary) !important; animation: pulse-ring 1.5s infinite; border-color: #fff !important; }
-        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 0.8; } }
-
-        .waveform { display: none; gap: 4px; height: 30px; align-items: center; justify-content: center; }
-        .voice-active .waveform { display: flex; }
-        .bar { width: 4px; height: 100%; background: #fff; animation: wave 0.4s ease-in-out infinite alternate; box-shadow: 0 0 10px #fff; }
-        .bar:nth-child(2) { animation-delay: 0.1s; }
-        .bar:nth-child(3) { animation-delay: 0.2s; }
-        .bar:nth-child(4) { animation-delay: 0.3s; }
-        @keyframes wave { from { height: 5px; } to { height: 30px; } }
-
-        #init-trigger::after { content: ''; position: absolute; width: 100%; height: 3px; background: var(--primary); top: 0; left: 0; animation: scan 1.5s ease-in-out infinite; box-shadow: 0 0 15px var(--primary); opacity: 0.7; }
-        @keyframes scan { 0% { top: 0; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
-
-        .scanner-label { color: var(--primary); font-size: 11px; letter-spacing: 4px; margin-top: 20px; font-weight: bold; text-shadow: var(--glow); text-transform: uppercase; }
-        #progress-ring { position: absolute; width: 100%; height: 100%; transform: rotate(-90deg); }
-
-        #overlay-ui { position: absolute; z-index: 10; width: 100%; height: 100%; pointer-events: none; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-
-        #terminal-log {
-            position: absolute; top: 40px; left: 40px;
-            background: rgba(0,0,0,0.85); border-left: 2px solid var(--primary);
-            padding: 15px; width: 350px; height: 300px; overflow-y: hidden;
-            font-size: 11px; color: var(--primary); opacity: 0;
-            box-shadow: 10px 10px 30px rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-            transform: perspective(500px) rotateY(5deg);
+        .item:hover {
+            background: rgba(0,0,0,0.02);
+            transform: translateX(5px);
         }
 
-        .grand-prompt { 
-            text-align: center; opacity: 0; transform: scale(0.5); 
-            line-height: 1.2; pointer-events: none;
+        .item-head { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: baseline;
+            font-weight: 800; 
+            font-size: 16px; 
+            color: #1a1a1a; 
+            gap: 15px;
         }
 
-        .name-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #fff;
-            font-size: 4rem;
+        .price { 
+            color: var(--accent); 
+            font-size: 10px; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            white-space: nowrap;
+            background: rgba(230, 57, 70, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .desc { 
+            font-size: 13px; 
+            color: #777; 
+            margin-top: 8px; 
+            line-height: 1.6; 
+            font-weight: 400;
+        }
+
+        /* --- AFTER DARK SECTION --- */
+        .after-dark-box { 
+            background: #000; 
+            border-radius: 35px; 
+            padding: 40px 25px; 
+            margin-top: 50px; 
+            border: 1px solid var(--neon-pink);
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.15);
+            position: relative;
+        }
+
+        .after-dark-box::before {
+            content: 'LIMITED ACCESS';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: var(--neon-pink);
+            letter-spacing: 5px;
+            animation: flicker 2s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 22%, 24%, 55% { opacity: 0.2; }
+        }
+
+        .after-dark-box h2 { 
+            color: #fff; 
+            border-bottom-color: #222; 
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+        .after-dark-box .item-head { color: #eee; }
+        .after-dark-box .desc { color: #bbb; font-style: italic; }
+        .after-dark-box .price { 
+            color: var(--neon-pink); 
+            border: 1px solid var(--neon-pink); 
+            background: transparent;
+            box-shadow: 0 0 5px var(--neon-pink);
+        }
+
+        /* --- VIP SECTION --- */
+        .vip-tier {
+            background: #fff;
+            background-image: var(--gold);
+            padding: 2px; /* For the border effect */
+            border-radius: 25px;
+            margin-top: 50px;
+        }
+
+        .vip-inner {
+            background: var(--cream);
+            padding: 30px 20px;
+            border-radius: 23px;
+            text-align: center;
+        }
+
+        .vip-title {
             font-weight: 900;
             letter-spacing: 5px;
-            text-shadow: 0 0 30px var(--primary), 0 0 60px var(--primary);
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .question-text {
-            font-family: 'Sacramento', cursive;
-            color: var(--primary);
-            font-size: 3rem;
-            text-shadow: 0 0 10px rgba(255, 45, 85, 0.5);
+            color: var(--dark);
+            margin-bottom: 10px;
             display: block;
         }
 
-        .valentine-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
+        /* --- BUTTON --- */
+        .btn {
+            display: block;
+            background: var(--dark);
             color: #fff;
-            letter-spacing: 10px;
-            font-weight: 700;
-            display: block;
-            margin-top: 10px;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+            text-decoration: none;
+            font-weight: 900;
+            letter-spacing: 3px;
+            border-radius: 20px;
+            transition: 0.4s;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
         }
 
-        #letter-overlay {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 90%; max-width: 650px; background: rgba(8, 8, 8, 0.98);
-            border: 1px solid var(--primary); padding: 50px; color: white;
-            z-index: 10005; display: none; opacity: 0; 
-            box-shadow: 0 0 100px rgba(255, 45, 85, 0.4);
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 0%; height: 100%;
+            background: var(--gold-solid);
+            transition: 0.4s;
+            z-index: -1;
         }
 
-        .btn-container { margin-top: 50px; display: flex; gap: 40px; pointer-events: all; opacity: 0; }
-        
-        .choice-btn {
-            padding: 15px 40px; 
-            background: rgba(0, 0, 0, 0.9);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold; text-transform: uppercase; letter-spacing: 2px; transition: all 0.2s;
-            position: relative; overflow: hidden; cursor: pointer;
-            font-size: 1rem;
-        }
+        .btn:hover::before { width: 100%; }
+        .btn:hover { color: var(--dark); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
 
-        #yes-btn { border: 2px solid var(--success); color: var(--success); box-shadow: 0 0 20px rgba(0, 255, 65, 0.1); }
-        #yes-btn:hover { background: var(--success); color: #000; box-shadow: 0 0 50px var(--success); transform: scale(1.1); }
-        #no-btn { border: 2px solid var(--primary); color: var(--primary); box-shadow: 0 0 20px rgba(255, 45, 85, 0.1); }
-
-        canvas { display: block; position: fixed; top: 0; left: 0; }
-
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; font-size: 11px; color: #666; border-bottom: 1px solid #333; padding-bottom: 20px;}
-        .stats-item span { color: var(--primary); font-weight: bold; margin-left: 5px; }
-        .digital-sig { color: var(--primary); font-size: 11px; margin-top: 20px; letter-spacing: 2px; font-weight: bold; text-align: right;}
-        
-        @media (max-width: 600px) {
-            .name-title { font-size: 2.5rem; }
-            .question-text { font-size: 2rem; }
-            .valentine-text { font-size: 2rem; letter-spacing: 5px; }
-            #terminal-log { width: 90%; height: 150px; top: 20px; left: 5%; transform: none; }
-            .btn-container { flex-direction: column; gap: 20px; }
+        footer { 
+            text-align: center; 
+            font-size: 10px; 
+            margin-top: 40px; 
+            color: #999; 
+            letter-spacing: 1px; 
+            line-height: 2;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
-    <div class="screen-overlay"></div>
-    <div id="flash"></div>
+<div class="menu-card">
+    <div class="stamp">PAST DUE</div>
+    
+    <header>
+        <h1>The Morning Muse</h1>
+        <div class="ledger">STATEMENT #882-LOVE • STATUS: SUSPENDED</div>
+    </header>
 
-    <div id="scanner-container">
-        <div id="init-trigger" onclick="initInteraction()" ondblclick="bypassScan()">
-            <svg id="progress-ring" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" fill="transparent" stroke="rgba(255, 45, 85, 0.2)" stroke-width="2"/>
-                <circle id="hold-progress" cx="50" cy="50" r="45" fill="transparent" stroke="#ff2d55" stroke-width="4" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"/>
-            </svg>
-            <div id="mic-inner" style="z-index: 2; text-align: center;">
-                <div id="mic-status" style="color: var(--primary); font-size: 10px; font-weight: bold; letter-spacing: 1px;">CLICK TO<br>INITIALIZE</div>
-                <div class="waveform"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-            </div>
-        </div>
-        <div class="scanner-label" id="status-text">SYSTEM LOCKED // REQUIRES AUTHENTICATION</div>
+    <h2>Morning Appetizers</h2>
+    <div class="item">
+        <div class="item-head"><span>The Lite Breakfast</span><span class="price">10 Miss U Texts</span></div>
+        <div class="desc">A medium text + 2 hearts + a bespoke compliment about your eyes.</div>
+    </div>
+    <div class="item">
+        <div class="item-head"><span>Voice Note Upgrade</span><span class="price">10 Audio Logs</span></div>
+        <div class="desc">Trade the text for my "just woke up" morning rasp voice. Heavy on the sleepy vibes.</div>
     </div>
 
-    <div id="work-mode">
-        <div style="border-bottom: 1px solid #222; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: #555;">SESSION_ID: <span id="sess-id" style="color: #fff;"></span></span>
-            <span style="background: var(--primary); color: #000; padding: 2px 8px; font-weight: bold; font-size: 10px;">SECURE: SCOOBY</span>
-        </div>
-        <div id="fake-console"></div>
-        <div style="position: absolute; bottom: 60px; left: 40px; width: 80%;">
-            <div style="color: #666; font-size: 15px; margin-bottom: 8px;">// ENTER ROOT ACCESS CODE </div>
-            <div style="display: flex; align-items: center;">
-                <span style="color: var(--primary); margin-right: 10px;"></span>
-                <span id="input-display" style="color: #fff; letter-spacing: 5px; font-size: 18px;"></span><span class="cursor"></span>
-            </div>
-        </div>
+    <h2>Main Entrées</h2>
+    <div class="item">
+        <div class="item-head"><span>The Full Brunch (LAGMM)</span><span class="price">10m Tight Hug</span></div>
+        <div class="desc">The Long-Ass Good Morning Message. Detailed reasons why you're a goddess.</div>
+    </div>
+    <div class="item">
+        <div class="item-head"><span>The Bottomless Mimosa</span><span class="price">10 Candid Selfies</span></div>
+        <div class="desc">Full-day hype man energy. Compliments every hour + 100% chat priority.</div>
     </div>
 
-    <div id="overlay-ui">
-        <div id="terminal-log"></div>
-        <div id="main-prompt" class="grand-prompt">
-            <span class="name-title">KANNAMMA</span>
-            <span class="question-text">will you be my</span>
-            <span class="valentine-text">VALENTINE?</span>
-        </div>
-        <div class="btn-container" id="btns">
-            <button class="choice-btn" id="yes-btn" onclick="celebrate()">YES</button>
-            <button class="choice-btn" id="no-btn" onmouseover="dodge(this)" ontouchstart="dodge(this)">NO</button>
-        </div>
+    <h2>The Wine Cellar</h2>
+    <div class="item">
+        <div class="item-head"><span>The 'Remember When'</span><span class="price">1 Core Memory</span></div>
+        <div class="desc">A deep-dive text about the exact second I knew you were the one.</div>
+    </div>
+    <div class="item">
+        <div class="item-head"><span>The Future Forecast</span><span class="price">3 Unknown Facts</span></div>
+        <div class="desc">A paragraph about what our life looks like 5 years from today. Spoiler: You're happy.</div>
     </div>
 
-    <div id="letter-overlay">
-        <div class="stats-grid">
-            <div class="stats-item">UPTIME: <span>ETERNAL</span></div>
-            <div class="stats-item">STATUS: <span>MATCHED</span></div>
-            <div class="stats-item">SECURITY: <span>IRREVOCABLE</span></div>
-            <div class="stats-item">TARGET: <span>KANNAMMA</span></div>
+    <div class="after-dark-box">
+        <h2>After Dark (Spicy Suite)</h2>
+        <div class="item">
+            <div class="item-head"><span>The Midnight Snack</span><span class="price">10 Spicy Photos</span></div>
+            <div class="desc">A detailed layout of our future home—from the door color to the spot where we’ll drink coffee.</div>
         </div>
-        <div id="letter-content" style="white-space: pre-wrap; line-height: 1.8; font-size: 14px; color: #ddd;"></div>
-        <div id="final-sig-container"></div>
-        <div style="margin-top: 30px; color: #444; font-size: 10px; border-top: 1px solid #222; padding-top: 15px;">
-            [EOF_ENCRYPTED_SESSION_CLOSED] // SYSTEM STANDBY
+        <div class="item">
+            <div class="item-head"><span>Room Service Special</span><span class="price">Head Massages</span></div>
+            <div class="desc">A written recap of exactly how your body drives me insane. No details spared.</div>
+        </div>
+        <div class="item">
+            <div class="item-head"><span>The Late Checkout</span><span class="price">10 Sleepy Mumbles</span></div>
+            <div class="desc">Unlocks my unfiltered, half-asleep thoughts sent to you in the dead of night.</div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <div class="vip-tier">
+        <div class="vip-inner">
+            <span class="vip-title">👑 VIP GOLD TIER</span>
+            <p style="font-size: 12px; margin: 10px 0; font-weight: 700;">PRICE: A BIG BITE OF YOUR FAVORITE FOOD</p>
+            <div class="desc">Priority response, unprompted kisses, and one "Kash Makeover" pass per month (Use wisely).</div>
+        </div>
+    </div>
 
-    <script>
-        /* --- CONFIG --- */
-        const PUBLIC_KEY = "_xTXlXMBhatGEPMB3";
-        const SERVICE_ID = "service_spy27yo";
-        const TEMPLATE_ID = "template_djbw0p9";
-        const PASSPHRASE = "override system"; 
-        const SECRET_CODE = "2817"; 
-        
-        const PERSONAL_LETTER = `[DECRYPTION_SUCCESSFUL]
+    <div class="item" style="border: 1px dashed var(--gold-solid); margin-top: 30px;">
+        <div class="item-head"><span>The Lifetime Bundle</span><span class="price">Admit I'm Cuter</span></div>
+        <div class="desc">Daily morning paragraphs for life. Non-refundable. Paid in total obsession.</div>
+    </div>
 
-To my favorite person,
+    <a href="#" class="btn" onclick="alert('CRITICAL ERROR: Account Frozen. \n\nPlease remit 1 Selfie (Current/Cute) to verify identity and unlock services.')">SETTLE THE BILL</a>
 
-await checkEmail(); // It’s important.
+    <footer>
+        * NO REFUNDS. TAXES PAID IN KISSES. <br>
+        * MANAGEMENT IS CURRENTLY HEAD OVER HEELS FOR THE CUSTOMER.
+    </footer>
+</div>
 
-I love you!.`;
-
-        /* --- SOUND ENGINE --- */
-const AudioEngine = {
-    init: () => {},
-    playAccess: () => {},
-    playError: () => {},
-    playTyping: () => {},
-    playHeartbeat: () => {},
-    playTone: () => {},
-    playGlitch: () => {},
-    playSuccess: () => {}
-};
-
-        /* --- MAIN LOGIC --- */
-        emailjs.init(PUBLIC_KEY);
-
-        let scene, camera, renderer, particles, heartGroup;
-        let currentInput = "";
-        let isRevealed = false;
-        let dodgeCount = 0;
-        let isErrorState = false;
-
-        document.getElementById('sess-id').textContent = Math.random().toString(36).toUpperCase().slice(2, 12);
-
-        const fakeConsole = document.getElementById('fake-console');
-        const logs = [
-            ` TRACE: 0x${Math.random().toString(16).slice(2,8)} -> REDIRECTING...`,
-            ` KERNEL: UNEXPECTED_EMOTIONAL_FLAG detected`,
-            ` DB_SYNC: Remote_User_1402 active`,
-            ` CAUTION: Unauthorized pulse detected in Sector 7`,
-            ` SYS_CHECK: Memory leak at 0x${Math.random().toString(16).slice(2,6)}`,
-            ` SIGNAL: Heartbeat detected outside safe parameters`,
-            ` AI_CORE: Recursive thought loop suppressed`,
-            ` NETWORK: Ghost packet received from UNKNOWN_NODE`,
-            ` WARNING: Reality desync at frame ${Math.floor(Math.random() * 120)}`,
-            ` EMOTION_ENGINE: Attachment variable exceeding threshold`,
-            ` TRACE_ROUTE: Path corrupted — rerouting instinctively`,
-            ` FIREWALL: Breach attempt logged and… ignored`,
-            ` SYSTEM: Time drift detected (+${Math.random().toFixed(3)}s)`,
-            ` CACHE: Forgotten memory fragment resurfaced`,
-            ` OBSERVER: You were not supposed to see this`,
-            ` CORE_TEMP: Rising… stabilizing… rising again`,
-            ` LOGIC_UNIT: Decision overridden by intuition`,
-            "Searching database for 'KANNAMMA'",
-            "Tracing memory: First meeting",
-            "Buffering butterflies",
-            "Analyzing cuteness levels [CRITICAL HIGH]",
-            "Heartbeat sync: IN PROGRESS",
-            "Warning: Too much affection detected",
-            "Routing love packet to Sector 7",
-            "Logic gates overwhelmed by emotion",
-            "Calibrating hug sensors"
-        ];
-
-        function autoScroll() {
-            if (isRevealed) return;
-            const p = document.createElement('div');
-            p.style.marginBottom = "5px";
-            p.innerHTML = `<span style="color:#666">${new Date().toLocaleTimeString()}</span> <span style="color:#0f0">></span> ${logs[Math.floor(Math.random() * logs.length)]}`;
-            fakeConsole.appendChild(p);
-            fakeConsole.scrollTop = fakeConsole.scrollHeight;
-            if (fakeConsole.childNodes.length > 15) fakeConsole.removeChild(fakeConsole.firstChild);
-        }
-        setInterval(autoScroll, 1200);
-
-        /* --- INTERACTION HANDLERS --- */
-        function initInteraction() {
-            AudioEngine.init(); 
-            startVoiceScan();
-        }
-
-        window.addEventListener('keydown', (e) => {
-            if (isRevealed || isErrorState) return;
-            AudioEngine.init();
-            
-            if(e.key >= '0' && e.key <= '9' && currentInput.length < 4) {
-                currentInput += e.key;
-                document.getElementById('input-display').textContent = currentInput;
-                AudioEngine.playTyping();
-                if (currentInput.length === 4) validateCode();
-            } else if (e.key === 'Backspace') {
-                currentInput = currentInput.slice(0, -1);
-                document.getElementById('input-display').textContent = currentInput;
-                AudioEngine.playTyping();
-            } else if (e.key === 'Enter') {
-                validateCode();
-            }
-        });
-
-        function validateCode() {
-            if (currentInput === SECRET_CODE) {
-                isRevealed = true;
-                AudioEngine.playAccess();
-                startBootSequence();
-            } else {
-                triggerError();
-            }
-        }
-
-        function triggerError() {
-            isErrorState = true;
-            const display = document.getElementById('input-display');
-            AudioEngine.playError();
-            display.style.color = "var(--error)";
-            display.textContent = "ACCESS DENIED";
-            gsap.fromTo("#work-mode", {x: -20}, {x: 20, duration: 0.05, repeat: 7, yoyo: true});
-            const p = document.createElement('div');
-            p.innerHTML = `<span style="color:red">>> INCORRECT AUTH CODE. SECURITY ALERT.</span>`;
-            fakeConsole.appendChild(p);
-            fakeConsole.scrollTop = fakeConsole.scrollHeight;
-            setTimeout(() => {
-                currentInput = "";
-                display.textContent = "";
-                display.style.color = "#fff";
-                isErrorState = false;
-            }, 1500);
-        }
-
-        async function startBootSequence() {
-            const consoleEl = document.getElementById('fake-console');
-            consoleEl.innerHTML = "";
-            const dramaLines = [
-                "> AUTHENTICATION SUCCESS: ROOT_USER_KASH",
-                "> DECRYPTING KANNAMMA_FILES...",
-                "> LOADING HEART_ASSETS [████████--] 90%",
-                "> EMOTIONAL OVERRIDE: ACTIVE",
-                "> WELCOME."
-            ];
-
-            for (let line of dramaLines) {
-                const div = document.createElement('div');
-                div.textContent = line;
-                div.style.color = "#fff";
-                div.style.fontWeight = "bold";
-                div.style.marginTop = "10px";
-                consoleEl.appendChild(div);
-                AudioEngine.playTyping();
-                await new Promise(r => setTimeout(r, 600));
-            }
-
-            gsap.to("#work-mode", {opacity: 0, duration: 1, onComplete: () => {
-                document.getElementById('work-mode').style.display = 'none';
-                document.getElementById('scanner-container').style.display = 'block';
-                gsap.from("#scanner-container", {scale: 0.8, opacity: 0, duration: 1});
-            }});
-        }
-
-function startVoiceScan() {
-    const statusText = document.getElementById('status-text');
-    const trigger = document.getElementById('init-trigger');
-    
-    // Switch the UI to look like a manual bypass
-    statusText.textContent = "VOICE MODULE OFFLINE // INITIATE MANUAL OVERRIDE";
-    statusText.style.color = "var(--primary)";
-    
-    // Create a mini-input field right in the status label
-    statusText.innerHTML = `
-        <span>USER: </span>
-        <input type="text" id="manual-input" 
-            style="background:none; border:none; border-bottom:1px solid var(--primary); 
-            color:#fff; font-family:'Courier Prime'; outline:none; width:150px; text-transform:uppercase;">
-    `;
-
-    const input = document.getElementById('manual-input');
-    input.focus();
-
-    input.addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') {
-            if (input.value.toLowerCase() === "kannamma") {
-                confirmMatch();
-            } else {
-                statusText.textContent = "INVALID COMMAND. RETRY.";
-                setTimeout(startVoiceScan, 1000); // Reset for retry
-            }
-        }
-    });
-}
-
-        function resetMic() { 
-            document.getElementById('init-trigger').classList.remove('voice-active'); 
-            document.getElementById('mic-status').style.display = 'block'; 
-            document.getElementById('status-text').style.animation = "none";
-        }
-        function bypassScan() { AudioEngine.init(); confirmMatch(); }
-        
-        function confirmMatch() {
-            AudioEngine.playAccess();
-            document.getElementById('status-text').textContent = "IDENTITY CONFIRMED";
-            document.getElementById('status-text').style.color = "#00ff41";
-            document.getElementById('status-text').style.animation = "none";
-            gsap.to("#hold-progress", { strokeDashoffset: 0, duration: 1, ease: "power2.out", onComplete: startBiometricAnalysis });
-        }
-
-        async function startBiometricAnalysis() {
-            const statusText = document.getElementById('status-text');
-            // BIOMETRIC ANALYSIS DELAY
-            statusText.textContent = "ANALYZING BIOMETRICS...";
-            let beats = 0;
-            const heartInterval = setInterval(() => {
-                AudioEngine.playHeartbeat(1 - (beats * 0.1));
-                beats++;
-                if(beats > 4) clearInterval(heartInterval);
-            }, 600);
-            
-            await new Promise(r => setTimeout(r, 3000));
-            statusText.textContent = "RESULT: GORGEOUS (100% MATCH)";
-            gsap.to("#init-trigger", { scale: 5, opacity: 0, duration: 0.8, ease: "power2.in" });
-            AudioEngine.playTone(600, 'sine', 1); 
-            await new Promise(r => setTimeout(r, 800));
-            startTheShow();
-        }
-
-        /* --- 3D & ANIMATION --- */
-        function initGraphics() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 180;
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-            
-            heartGroup = new THREE.Group();
-            const count = 15000;
-            const geo = new THREE.BufferGeometry();
-            const pos = new Float32Array(count * 3);
-            const colors = new Float32Array(count * 3);
-            
-            for (let i = 0; i < count; i++) {
-                pos[i*3] = (Math.random() - 0.5) * 800; 
-                pos[i*3+1] = (Math.random() - 0.5) * 800; 
-                pos[i*3+2] = (Math.random() - 0.5) * 800;
-                colors[i*3] = 1; colors[i*3+1] = 0.2; colors[i*3+2] = 0.3;
-            }
-            
-            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-            geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            
-            const targetPositions = new Float32Array(count * 3);
-            for(let i=0; i<count; i++) {
-                const t = Math.random() * Math.PI * 2;
-                const x = 16 * Math.pow(Math.sin(t), 3);
-                const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
-                const z = (Math.random() - 0.5) * 10;
-                targetPositions[i*3] = x * 3.5 + (Math.random()-0.5)*2; 
-                targetPositions[i*3+1] = y * 3.5 + (Math.random()-0.5)*2; 
-                targetPositions[i*3+2] = z * 3.5;
-            }
-            geo.setAttribute('target', new THREE.BufferAttribute(targetPositions, 3));
-
-            particles = new THREE.Points(geo, new THREE.PointsMaterial({ 
-                size: 1.2, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending 
-            }));
-            
-            heartGroup.add(particles); 
-            scene.add(heartGroup); 
-            animate();
-        }
-
-        function animate() { 
-            requestAnimationFrame(animate); 
-            heartGroup.rotation.y += 0.002;
-            const time = Date.now() * 0.002;
-            const scale = 1 + Math.sin(time * 2) * 0.05 + Math.sin(time * 8) * 0.02;
-            heartGroup.scale.set(scale, scale, scale);
-            renderer.render(scene, camera); 
-        }
-
-        async function startTheShow() {
-            document.getElementById('scanner-container').style.display = 'none';
-            const logEl = document.getElementById('terminal-log'); 
-            gsap.to(logEl, { opacity: 1, duration: 1 });
-            
-            // 1. LOADING CORE MEMORIES SEQUENCE
-            const slowLines = [
-                "> ACCESSING CORE_VALENTINE_PROTOCOLS...",
-                "> SEARCHING UNIQUE_ID: 'KANNAMMA'",
-                "> RETRIEVING MEMORY: [FIRST_MEETING.log]... OK",
-                "> RETRIEVING MEMORY: [CUTEST_SMILE.dat]... OK",
-                "> ANALYZING EMOTIONAL_ATTACHMENT... [REDACTED]",
-                "> WARNING: LOGIC_CORE OVERWHELMED",
-                "> INITIATING HEART_CONSTRUCTION..."
-            ];
-
-            for(let line of slowLines) {
-                let d = document.createElement('div'); 
-                d.textContent = line; 
-                d.style.marginBottom = "5px";
-                if(line.includes("WARNING")) d.style.color = "yellow";
-                logEl.appendChild(d);
-                AudioEngine.playTyping();
-                await new Promise(r => setTimeout(r, 1200));
-            }
-
-            // 3. PROGRESSIVE HEART REVEAL (CONSTRUCTION)
-            const posArr = particles.geometry.attributes.position.array;
-            const targetArr = particles.geometry.attributes.target.array;
-            const dummy = { val: 0 };
-
-            const constructionLogs = [
-                "> Requirement: 100,000 Hugs/Year [NOTMET]",
-                "> Requirement: Infinite LOVE [MET]",
-                "> Requirement: Kannamma's Smile [REQUIRED]"
-            ];
-
-            gsap.to(dummy, { 
-                val: 1, 
-                duration: 8, 
-                ease: "power2.inOut", 
-                onStart: () => {
-                    let logCount = 0;
-                    const logInterval = setInterval(() => {
-                        if(logCount < constructionLogs.length) {
-                            let d = document.createElement('div');
-                            d.textContent = constructionLogs[logCount];
-                            d.style.color = "cyan";
-                            logEl.appendChild(d);
-                            logEl.scrollTop = logEl.scrollHeight;
-                            logCount++;
-                        } else { clearInterval(logInterval); }
-                    }, 2000);
-                },
-                onUpdate: () => {
-                    for(let i=0; i < posArr.length; i++) {
-                        posArr[i] += (targetArr[i] - posArr[i]) * 0.02; // Slower interpolation
-                    }
-                    particles.geometry.attributes.position.needsUpdate = true;
-                }
-            });
-
-            gsap.to(camera.position, { z: 100, duration: 8, ease: "power3.inOut" });
-            gsap.to("#main-prompt", { opacity: 1, scale: 1, delay: 6, duration: 2, ease: "elastic.out(1, 0.5)" });
-            gsap.to("#btns", { opacity: 1, delay: 7, duration: 1 });
-        }
-
-        function dodge(btn) {
-            dodgeCount++;
-            AudioEngine.playGlitch();
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
-            btn.style.position = 'fixed'; btn.style.left = x + 'px'; btn.style.top = y + 'px';
-            const logEl = document.getElementById('terminal-log');
-            let d = document.createElement('div'); d.style.color = "yellow";
-            if(dodgeCount === 1) d.textContent = ">> WARNING: REFUSAL NOT ACCEPTED";
-            if(dodgeCount === 3) d.textContent = ">> ERROR 404: 'NO' NOT FOUND";
-            if(dodgeCount >= 5) {
-                d.textContent = ">> SYSTEM OVERRIDE: REMOVING OPTION";
-                btn.innerHTML = "ERROR"; btn.style.opacity = 0.5;
-            }
-            logEl.appendChild(d); logEl.scrollTop = logEl.scrollHeight;
-        }
-
-function celebrate() {
-    // 1. Trigger Sound & Setup
-    AudioEngine.playSuccess();
-    const now = new Date();
-    const timestamp = now.toLocaleString();
-    const longLoveMessage = `/* * Heart Archive: ${timestamp}
- * Status: Persistent
- */
-
-To my dearest Kannamma,
-
-// Initializing the only constant that matters.
-const devotion = Infinity;
-
-I used to think my world was secure, but you didn't break 
-the system you upgraded it. You aren't a glitch; 
-you’re the architecture my heart was actually built for.
-
-என் சுவாசமே ... என் தேவதையே
-
-No patches, no rollbacks. Just a permanent commitment 
-to the one person who makes the system run perfectly.
-
-Unconditionally,
-Kash
-
-// Connection Stable: ${timestamp}`;
-
-    // 2. Notify via EmailJS
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, { sender_name: "Kash", time: timestamp, love_message: longLoveMessage });
-
-    // 3. UI Phase Shift
-    document.getElementById('btns').style.display = 'none';
-    document.getElementById('main-prompt').innerHTML = "<span style='color:#00ff41; font-family: Orbitron;'>CORE BREACH SUCCESSFUL</span><br><span style='font-size:1.5rem; font-family: Courier Prime'>SOUL_SYNC COMPLETE</span>";
-    
-    // 4. Particle Explosion
-    const posArr = particles.geometry.attributes.position.array;
-    for(let i=0; i<posArr.length; i+=3) {
-        const x = posArr[i]; const y = posArr[i+1]; const z = posArr[i+2];
-        const len = Math.sqrt(x*x + y*y + z*z);
-        if(len > 0) gsap.to(posArr, { [i]: x/len * 500, [i+1]: y/len * 500, [i+2]: z/len * 500, duration: 4, ease: "power2.out" });
-    }
-    gsap.ticker.add(() => particles.geometry.attributes.position.needsUpdate = true);
-    gsap.to(camera.position, { z: 40, duration: 3 });
-
-    // 5. Final Terminal Logs before the Letter
-    const logEl = document.getElementById('terminal-log');
-    const finalLines = ["ERR: EMOTIONAL_OVERFLOW", `SYNCED_AT: [${timestamp}]`, "DATA_SENT_TO_KANNAMMA", "DECRYPTING_FINAL_THOUGHTS..."];
-    
-    finalLines.forEach((msg, i) => {
-        setTimeout(() => {
-            let d = document.createElement('div'); 
-            d.textContent = `>> ${msg}`;
-            if (msg.includes("SYNCED")) d.style.color = "#00ff41";
-            logEl.appendChild(d);
-            logEl.scrollTop = logEl.scrollHeight;
-            
-            // Trigger the typing letter after the last log line
-            if(i === finalLines.length - 1) setTimeout(showLetter, 1200);
-        }, i * 600);
-    });
-}
-
-function showLetter() {
-    const overlay = document.getElementById('letter-overlay');
-    const content = document.getElementById('letter-content');
-    
-    // Reset content and show overlay
-    content.textContent = ""; 
-    overlay.style.display = 'block';
-    gsap.to(overlay, { opacity: 1, duration: 1.5 });
-
-    // Terminal Typing Effect
-    let i = 0;
-    const type = () => {
-        if (i < PERSONAL_LETTER.length) {
-            content.textContent += PERSONAL_LETTER.charAt(i);
-            i++;
-            // Play a small typing sound if your AudioEngine supports it
-            if (i % 3 === 0) AudioEngine.playTyping(); 
-            
-            // Randomize typing speed slightly for realism
-            setTimeout(type, 30 + Math.random() * 20); 
-        } else {
-            // Add Digital Signature at the end
-            const sigContainer = document.getElementById('final-sig-container');
-            const sig = document.createElement('div');
-            sig.className = 'digital-sig';
-            sig.style.marginTop = "20px";
-            sig.style.color = "var(--primary)";
-            sig.textContent = "[SIGNED: KASH //]";
-            sigContainer.appendChild(sig);
-            gsap.from(sig, { opacity: 0, y: 10, duration: 1 });
-        }
-    };
-    
-    setTimeout(type, 500);
-}
-
-        initGraphics();
-    </script>
 </body>
 </html>
